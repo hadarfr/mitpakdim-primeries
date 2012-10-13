@@ -14,7 +14,9 @@ class root.Member extends Backbone.Model
     defaults:
         score: 'N/A'
 class root.MemberAgenda extends Backbone.Model
-    urlRoot: "http://api.dev.oknesset.org/api/v2/member-agendas/"
+    urlRoot: "http://www.oknesset.org/api/v2/member-agendas/"
+    url: ->
+        return super() + '/'
     sync: root.JSONPSync
 
 ############### COLLECTIONS ##############
@@ -45,7 +47,7 @@ class root.JSONPCollection extends root.LocalVarCollection
 class root.MemberList extends root.JSONPCollection
     model: root.Member
     localObject: window.mit.members
-    url: "http://api.dev.oknesset.org/api/v2/member/"
+    url: "http://www.oknesset.org/api/v2/member/"
 
 ############### VIEWS ##############
 
@@ -110,7 +112,7 @@ class root.AppView extends Backbone.View
         @partyListView = new root.DropdownContainer
             collection: new root.JSONPCollection(null,
                 model: root.MiscModel
-                url: "http://api.dev.oknesset.org/api/v2/party/"
+                url: "http://www.oknesset.org/api/v2/party/"
                 localObject: window.mit.parties
             )
         @$(".parties").append(@partyListView.$el)
@@ -119,8 +121,8 @@ class root.AppView extends Backbone.View
         @agendaListView = new root.ListView
             collection: new root.JSONPCollection(null,
                 model: root.Agenda
-                localObject: window.mit.agendas
-                url: "http://api.dev.oknesset.org/api/v2/agenda/"
+                #localObject: window.mit.agendas
+                url: "http://www.oknesset.org/api/v2/agenda/"
             )
             itemView: class extends root.ListViewItem
                 render : ->
